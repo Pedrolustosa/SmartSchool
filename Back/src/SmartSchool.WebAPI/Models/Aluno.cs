@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SmartSchool.WebAPI.Models
 {
     public class Aluno
