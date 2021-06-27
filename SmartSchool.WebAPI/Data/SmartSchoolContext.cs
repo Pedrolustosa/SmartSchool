@@ -4,9 +4,9 @@ using SmartSchool.WebAPI.Models;
 
 namespace SmartSchool.WebAPI.Data
 {
-    public class SmartContext : DbContext
+    public class SmartSchoolContext : DbContext
     {
-        public SmartContext(DbContextOptions<SmartContext> options) : base(options) { }
+        public SmartSchoolContext(DbContextOptions<SmartSchoolContext> options) : base(options) { }
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Professor> Professores { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
