@@ -11,9 +11,11 @@ namespace SmartSchool.WebAPI.Controllers
     public class ProfessorController : ControllerBase
     {
         private readonly SmartSchoolContext _context;
+        private readonly IRepository _repo;
 
-        public ProfessorController(SmartSchoolContext context)
+        public ProfessorController(SmartSchoolContext context, IRepository repo)
         {
+            _repo = repo;
             _context = context;
         }
 
@@ -42,33 +44,36 @@ namespace SmartSchool.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Professor Professor)
+        public IActionResult Post(Professor professor)
         {
-            _context.Add(Professor);
-            _context.SaveChanges();
-            return Ok(Professor);
+            _repo.Add(professor);
+            if (_repo.SaveChanges())
+            {
+                return Ok(professor);
+            }
+            return BadRequest("Professor não cadastrado!");
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Professor Professor)
+        public IActionResult Put(int id, Professor professor)
         {
             var prof = _context.Professores.AsNoTracking().FirstOrDefault(a => a.Id == id);
             if (prof == null) return BadRequest("Professor não encontrado!");
 
-            _context.Update(Professor);
+            _context.Update(professor);
             _context.SaveChanges();
-            return Ok(Professor);
+            return Ok(professor);
         }
 
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, Professor Professor)
+        public IActionResult Patch(int id, Professor professor)
         {
             var prof = _context.Professores.AsNoTracking().FirstOrDefault(a => a.Id == id);
             if (prof == null) return BadRequest("Professor não encontrado!");
 
-            _context.Update(Professor);
+            _context.Update(professor);
             _context.SaveChanges();
-            return Ok(Professor);
+            return Ok(professor);
         }
 
         [HttpDelete("{id}")]
