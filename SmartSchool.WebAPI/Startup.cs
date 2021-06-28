@@ -26,7 +26,7 @@ namespace SmartSchool.WebAPI
 
             //services.AddSingleton<IRepository, Repository>();
             //services.AddTransient<IRepository, Repository>();
-            //services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IRepository, Repository>();
 
             services.AddControllers();
         }
