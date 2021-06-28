@@ -9,10 +9,10 @@ namespace SmartSchool.WebAPI.Models
         public Professor(int id, string nome)
         {
             this.Id = id;
-            this.nome = nome;
+            this.Nome = nome;
         }
         public int Id { get; set; }
-        public string nome { get; set; }
+        public string Nome { get; set; }
         public IEnumerable<Disciplina> Disciplinas { get; set; }
     }
 }
