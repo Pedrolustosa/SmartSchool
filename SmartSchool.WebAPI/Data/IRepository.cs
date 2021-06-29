@@ -13,7 +13,7 @@ namespace SmartSchool.WebAPI.Data
         //Alunos
         Aluno[] GetAllAlunos();
         Aluno[] GetAllAlunosByDisciplinaId();
-        Aluno[] GetAlunosById();
+        Aluno[] GetAlunoById();
 
         //Professores
         Professor[] GetAllProfessores();

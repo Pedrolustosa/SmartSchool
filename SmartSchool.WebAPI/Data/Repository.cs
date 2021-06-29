@@ -1,3 +1,5 @@
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.Models;
 
 namespace SmartSchool.WebAPI.Data
@@ -30,19 +32,57 @@ namespace SmartSchool.WebAPI.Data
         }
 
         //Alunos
-        public Aluno[] GetAllAlunos()
+        public Aluno[] GetAllAlunos(bool includeProfessor)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Aluno> query = _context.Alunos;
+
+            if (includeProfessor)
+            {
+                query = query.Include(a => a.AlunosDisciplinas)
+                             .ThenInclude(ad => ad.Disciplina)
+                             .ThenInclude(d => d.Professor);
+            }
+
+            query = query.AsNoTracking().OrderBy(a => a.Id);
+
+            return query.ToArray();
         }
 
-        public Aluno[] GetAllAlunosByDisciplinaId()
+        public Aluno[] GetAllAlunosByDisciplinaId(int disciplinaId, bool includeProfessor = false)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Aluno> query = _context.Alunos;
+
+            if (includeProfessor)
+            {
+                query = query.Include(a => a.AlunosDisciplinas)
+                             .ThenInclude(ad => ad.Disciplina)
+                             .ThenInclude(d => d.Professor);
+            }
+
+            query = query.AsNoTracking()
+                         .OrderBy(a => a.Id)
+                         .Where(aluno => aluno.AlunosDisciplinas
+                         .Any(ad => ad.DisciplinaId == disciplinaId));
+
+            return query.ToArray();
         }
 
-        public Aluno[] GetAlunosById()
+        public Aluno GetAlunoById(int alunoId, bool includeProfessor = false)
         {
-            throw new System.NotImplementedException();
+            IQueryable<Aluno> query = _context.Alunos;
+
+            if (includeProfessor)
+            {
+                query = query.Include(a => a.AlunosDisciplinas)
+                             .ThenInclude(ad => ad.Disciplina)
+                             .ThenInclude(d => d.Professor);
+            }
+
+            query = query.AsNoTracking()
+                         .OrderBy(a => a.Id)
+                         .Where(aluno => aluno.Id == alunoId);
+
+            return query.FirstOrDefault();
         }
 
         //Professor
