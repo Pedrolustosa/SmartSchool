@@ -1,3 +1,5 @@
+using SmartSchool.WebAPI.Models;
+
 namespace SmartSchool.WebAPI.Data
 {
     public class Repository : IRepository
@@ -27,5 +29,36 @@ namespace SmartSchool.WebAPI.Data
             return (_context.SaveChanges() > 0);
         }
 
+        //Alunos
+        public Aluno[] GetAllAlunos()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Aluno[] GetAllAlunosByDisciplinaId()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Aluno[] GetAlunosById()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        //Professor
+        public Professor[] GetAllProfessores()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Professor[] GetAllProfessoresByDisciplinaId()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Professor[] GetProfessorById()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
