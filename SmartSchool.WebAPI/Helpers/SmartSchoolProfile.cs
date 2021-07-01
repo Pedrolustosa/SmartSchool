@@ -6,13 +6,17 @@ namespace SmartSchool.WebAPI.Helpers
 {
     public class SmartSchoolProfile : Profile
     {
-        SmartSchoolProfile()
+        public SmartSchoolProfile()
         {
             CreateMap<Aluno, AlunoDto>()
-            .ForMember(
-                dest => dest.Nome,
-                opt => opt.MapFrom(src => $"{src.Nome} {src.Sobrenome}")
-            );
+                .ForMember(
+                    dest => dest.Nome,
+                    opt => opt.MapFrom(src => $"{src.Nome} {src.Sobrenome}")
+                )
+                .ForMember(
+                    dest => dest.Idade,
+                    opt => opt.MapFrom(src => src.DataNasc.GetCurrentAge())
+                );
         }
     }
 }
