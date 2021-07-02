@@ -25,7 +25,7 @@ namespace SmartSchool.WebAPI.Data
 
             builder.Entity<Professor>()
                 .HasData(new List<Professor>(){
-                    new Professor(1, 1, "Lauro", "Oliveira"),
+                    new Professor(1, 1, "Pedro", "Lustosa"),
                     new Professor(2, 2, "Roberto", "Soares"),
                     new Professor(3, 3, "Ronaldo", "Marconi"),
                     new Professor(4, 4, "Rodrigo", "Carvalho"),
