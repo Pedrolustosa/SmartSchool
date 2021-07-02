@@ -34,6 +34,16 @@ namespace SmartSchool.WebAPI.Controllers
         }
 
         /// <summary>
+        /// Método responsável por retonar apenas um único AlunoDTO.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("getRegister")]
+        public IActionResult GetRegister()
+        {
+            return Ok(new AlunoRegistrarDto());
+        }
+
+        /// <summary>
         /// Api/Aluno/1
         /// </summary>
         /// <param name="id"></param>
@@ -55,7 +65,7 @@ namespace SmartSchool.WebAPI.Controllers
         /// <param name="aluno"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post(AlunoDto model)
+        public IActionResult Post(AlunoRegistrarDto model)
         {
 
             var aluno = _mapper.Map<Aluno>(model);
@@ -75,7 +85,7 @@ namespace SmartSchool.WebAPI.Controllers
         /// <param name="aluno"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public IActionResult Put(int id, AlunoDto model)
+        public IActionResult Put(int id, AlunoRegistrarDto model)
         {
             var aluno = _repo.GetAlunoById(id);
             if (aluno == null) return BadRequest("Aluno não encontrado!");

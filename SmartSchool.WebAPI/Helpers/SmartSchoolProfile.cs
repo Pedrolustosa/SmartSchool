@@ -18,7 +18,8 @@ namespace SmartSchool.WebAPI.Helpers
                     opt => opt.MapFrom(src => src.DataNasc.GetCurrentAge())
                 );
 
-            CreateMap<Aluno, AlunoDto>();
+            CreateMap<AlunoDto, Aluno>();
+            CreateMap<Aluno, AlunoRegistrarDto>().ReverseMap();
         }
     }
 }
