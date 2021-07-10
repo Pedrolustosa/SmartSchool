@@ -6,7 +6,7 @@
         <app-titulo [titulo]="'Cód. Aluno: ' + alunoSelecionado.id"></app-titulo>
       </div>
       <div class="mt-1">
-        <button class="btn btn-sm btn-outline-danger" (click)="voltar()">
+        <button class="btn btn-sm btn-outline-danger">
           Fechar
         </button>
       </div>
@@ -70,7 +70,7 @@
 
 <ng-template #template>
   <div class="modal-body">
-    <app-professores-alunos (closeModal)="closeModal()" [professores]="profsAlunos"></app-professores-alunos>
+    <!--<app-professores-alunos (closeModal)="closeModal()" [professores]="profsAlunos"></app-professores-alunos>-->
   </div>
   <div class="modal-footer">
     <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef.hide()">

@@ -4,10 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AlunoService } from '../../services/aluno.service';
+import { AlunoService } from '../../service/aluno.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { ProfessorService } from '../../services/professor.service';
+import { Observable, Subject } from 'rxjs';
+import { ProfessorService } from '../../service/professor.service';
 import { Professor } from '../../models/Professor';
 import { ActivatedRoute } from '@angular/router';
 
@@ -18,18 +18,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AlunosComponent implements OnInit, OnDestroy {
 
-  public modalRef: BsModalRef | undefined;
-  public alunoForm: FormGroup | undefined;
+  public modalRef!: BsModalRef;
+  public alunoForm!: FormGroup;
   public titulo = 'Alunos';
-  public alunoSelecionado: Aluno;
-  public textSimple: string | undefined;
-  public profsAlunos: Professor[] | undefined;
+  public alunoSelecionado!: Aluno;
+  public textSimple!: string;
+  public profsAlunos!: Professor[];
 
   private unsubscriber = new Subject();
 
-  public alunos: Aluno[] | undefined;
-  public aluno: Aluno;
-  public msnDeleteAluno: string | undefined;
+  public alunos!: Aluno[];
+  public aluno!: Aluno;
+  public msnDeleteAluno!: string;
   public modeSave = 'post';
 
   openModal(template: TemplateRef<any>, alunoId: number): void {
@@ -37,7 +37,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   closeModal(): void {
-    this.modalRef.hide();
+    this.modalRef!.hide();
   }
 
   professoresAlunos(template: TemplateRef<any>, id: number) {
@@ -49,7 +49,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
         this.modalRef = this.modalService.show(template);
       }, (error: any) => {
         this.toastr.error(`erro: ${error}`);
-        console.log(error);
+        console.error(error);
       }, () => this.spinner.hide()
       );
   }
@@ -85,16 +85,16 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   saveAluno(): void {
-    if (this.alunoForm.valid) {
+    if (this.alunoForm!.valid) {
       this.spinner.show();
 
       if (this.modeSave === 'post') {
-        this.aluno = { ...this.alunoForm.value };
+        this.aluno = { ...this.alunoForm!.value };
       } else {
-        this.aluno = { id: this.alunoSelecionado.id, ...this.alunoForm.value };
+        this.aluno = { id: this.alunoSelecionado!.id, ...this.alunoForm!.value };
       }
 
-      this.alunoService[this.modeSave](this.aluno)
+      this.alunoService.post(this.aluno)
         .pipe(takeUntil(this.unsubscriber))
         .subscribe(
           () => {
@@ -110,17 +110,12 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   carregarAlunos(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
 
     this.spinner.show();
     this.alunoService.getAll()
-      .pipe(takeUntil(this.unsubscriber))
+    .pipe(takeUntil(this.unsubscriber))
       .subscribe((alunos: Aluno[]) => {
         this.alunos = alunos;
-
-        if (id > 0) {
-          this.alunoSelect(this.alunos.find(aluno => aluno.id === id));
-        }
 
         this.toastr.success('Alunos foram carregado com Sucesso!');
       }, (error: any) => {
@@ -133,11 +128,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   alunoSelect(aluno: Aluno): void {
     this.modeSave = 'put';
     this.alunoSelecionado = aluno;
-    this.alunoForm.patchValue(aluno);
-  }
-
-  voltar(): void {
-    this.alunoSelecionado = null;
+    this.alunoForm!.patchValue(aluno);
   }
 
 }
