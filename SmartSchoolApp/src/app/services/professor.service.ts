@@ -36,4 +36,5 @@ export class ProfessorService {
   delete(id: number) {
     return this.http.delete(`${this.baseURL}/${id}`);
   }
+
 }
