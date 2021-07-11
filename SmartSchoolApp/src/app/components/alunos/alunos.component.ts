@@ -67,7 +67,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
     this.criarForm();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.carregarAlunos();
   }
 
