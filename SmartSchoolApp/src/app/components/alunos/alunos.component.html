@@ -40,19 +40,17 @@
         <tr>
           <th scope="col">Visualizar</th>
           <th scope="col">#</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Sobrenome</th>
+          <th scope="col">Nome Completo</th>
           <th scope="col">telefone</th>
           <th scope="col">Opções</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let aluno of alunos">
-          <td><button (click)="alunoSelect(aluno)" class="text-dark btn btn-sm btn-outline-warning">Detalhe</button>
+          <td><button (click)="alunoSelect(aluno.id)" class="text-dark btn btn-sm btn-outline-warning">Detalhe</button>
           </td>
           <td scope="row">{{aluno.id}}</td>
           <td>{{aluno.nome}}</td>
-          <td>{{aluno.sobrenome}}</td>
           <td>{{aluno.telefone}}</td>
           <td>
             <div class="btn-group">

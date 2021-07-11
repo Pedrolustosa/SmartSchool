@@ -49,7 +49,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
         this.modalRef = this.modalService.show(template);
       }, (error: any) => {
         this.toastr.error(`erro: ${error.message}`);
-        console.log(error.message);
+        console.error(error.message);
         this.spinner.hide();
       }, () => this.spinner.hide()
     );
@@ -112,7 +112,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   carregarAlunos() {
-    const id = +this.route.snapshot.paramMap.get('id');
+    const alunoId = +this.route.snapshot.paramMap.get('id');
 
     this.spinner.show();
     this.alunoService.getAll()
@@ -120,23 +120,33 @@ export class AlunosComponent implements OnInit, OnDestroy {
       .subscribe((alunos: Aluno[]) => {
         this.alunos = alunos;
 
-        if (id > 0) {
-          this.alunoSelect(this.alunos.find(aluno => aluno.id === id));
+        if (alunoId > 0) {
+          this.alunoSelect(alunoId);
         }
 
         this.toastr.success('Alunos foram carregado com Sucesso!');
       }, (error: any) => {
         this.toastr.error('Alunos não carregados!');
-        console.log(error);
+        console.error(error);
         this.spinner.hide();
       }, () => this.spinner.hide()
     );
   }
 
-  alunoSelect(aluno: Aluno) {
+  alunoSelect(alunoId: number): void {
     this.modeSave = 'put';
-    this.alunoSelecionado = aluno;
-    this.alunoForm.patchValue(aluno);
+    this.alunoService.getById(alunoId).subscribe(
+      (alunoReturn) => {
+        this.alunoSelecionado = alunoReturn;
+        this.alunoForm.patchValue(this.alunoSelecionado);
+      },
+      (error) => {
+        this.toastr.error('Alunos não carregados!');
+        console.error(error);
+        this.spinner.hide();
+      },
+      () => this.spinner.hide()
+    );
   }
 
   voltar() {
