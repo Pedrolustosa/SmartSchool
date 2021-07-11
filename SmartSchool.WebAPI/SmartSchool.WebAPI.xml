@@ -50,7 +50,7 @@
             <param name="aluno"></param>
             <returns></returns>
         </member>
-        <member name="M:SmartSchool.WebAPI.V1.Controllers.AlunoController.Patch(System.Int32,SmartSchool.WebAPI.V1.Dtos.AlunoDto)">
+        <member name="M:SmartSchool.WebAPI.V1.Controllers.AlunoController.Patch(System.Int32,SmartSchool.WebAPI.V1.Dtos.AlunoPatchDto)">
             <summary>
             Api/Aluno
             </summary>
@@ -89,6 +89,12 @@
             </summary>
             <param name="professor"></param>
             <returns></returns>
+        </member>
+        <member name="P:SmartSchool.WebAPI.V1.Dtos.AlunoPatchDto.Id">
+            <summary>
+            Este é o DTO de Alunos para pequenas atualizações. Ex: 1 campo
+            </summary>
+            <value></value>
         </member>
         <member name="T:SmartSchool.WebAPI.V2.Controllers.AlunoController">
             <summary>
