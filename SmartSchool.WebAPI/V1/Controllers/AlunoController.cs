@@ -48,6 +48,17 @@ namespace SmartSchool.WebAPI.V1.Controllers
         /// Método responsável por retonar apenas um único AlunoDTO.
         /// </summary>
         /// <returns></returns>
+        [HttpGet("ByDisciplina/{id}")]
+        public async Task<IActionResult> GetByDisciplina(int id)
+        {
+            var result = await _repo.GetAllAlunosByDisciplinaIdAsync(id, false);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Método responsável por retonar apenas um único AlunoDTO.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("getRegister")]
         public IActionResult GetRegister()
         {
