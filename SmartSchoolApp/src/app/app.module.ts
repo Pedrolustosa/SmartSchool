@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -22,6 +22,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
+import { PaginationComponent } from 'ngx-bootstrap';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
    declarations: [
@@ -52,11 +54,16 @@ import { AppRoutingModule } from './app-routing.module';
         preventDuplicates: true,
         progressBar: true,
         closeButton: true
-      })
+      }),
+      PaginationModule.forRoot()
    ],
    providers: [],
    bootstrap: [
       AppComponent
-   ]
+   ],
+   schemas: [
+      CUSTOM_ELEMENTS_SCHEMA,
+      NO_ERRORS_SCHEMA
+    ],
 })
 export class AppModule { }

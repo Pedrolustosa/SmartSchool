@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { ProfessorService } from '../../services/professor.service';
 import { Professor } from '../../models/Professor';
 import { ActivatedRoute } from '@angular/router';
+import { PaginatedResult, Pagination } from 'src/app/models/Pagination';
 
 @Component({
   selector: 'app-alunos',
@@ -31,6 +32,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   public aluno: Aluno;
   public msnDeleteAluno: string;
   public modeSave = 'post';
+  pagination: Pagination;
 
   openModal(template: TemplateRef<any>, alunoId: number) {
     this.professoresAlunos(template, alunoId);
@@ -68,6 +70,7 @@ export class AlunosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.pagination = { currentPage: 1, itemsPerPage: 4 } as Pagination;
     this.carregarAlunos();
   }
 
@@ -131,10 +134,11 @@ export class AlunosComponent implements OnInit, OnDestroy {
     const alunoId = +this.route.snapshot.paramMap.get('id');
 
     this.spinner.show();
-    this.alunoService.getAll()
+    this.alunoService.getAll(this.pagination.currentPage, this.pagination.itemsPerPage)
       .pipe(takeUntil(this.unsubscriber))
-      .subscribe((alunos: Aluno[]) => {
-        this.alunos = alunos;
+      .subscribe((alunos: PaginatedResult<Aluno[]>) => {
+        this.alunos = alunos.result;
+        this.pagination = alunos.pagination;
 
         if (alunoId > 0) {
           this.alunoSelect(alunoId);
@@ -147,6 +151,11 @@ export class AlunosComponent implements OnInit, OnDestroy {
         this.spinner.hide();
       }, () => this.spinner.hide()
     );
+  }
+
+  pageChanged(event: any): void {
+    this.pagination.currentPage = event.page;
+    this.carregarAlunos();
   }
 
   alunoSelect(alunoId: number): void {
